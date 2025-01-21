@@ -1,6 +1,9 @@
 # poe-ai-agent-example
 This is an example build of using Poe.com's API to create an LLM based AI agent that can execute commands and tools in a multi-shot way without relying on LangGraph, LangChain, GCP Vertex, or Amazon Bedrock. It is just a generic multi shot LLM "agent" without the agentic framework.
 
+## Caution
+Please note that this is considered a proof of concept piece of code. Although I do show you how to use basic guard rails, this may not protect against everything, including data leaking of important system information in an uncontrolled LLM. You should replace the poe.com agent with a trusted instance of an LLM running in a production or corporate env. Please do NOT run this on a production network without extensive testing and additional guard rails, including consideration for changing from poe.com to any other LLM API client that you TRUST. That being said, there is NO EXPRESSED WARRANTY.
+
 ## Summary
 This project is a quick and dirty way of using a multi-shot AI agent approach using a single LLM. We wrap poe.com's [fastapi](https://github.com/poe-platform/fastapi_poe) using their standard Python 3.x client and then parse the output appending a large prompt to maintain state. I chose poe.com because of their simple API to be able to use a custom "bot" that has their version of referenced RAG documents or any choice of desired LLM. The demonstrated one is Claude 3.5 Sonnet at the time of this writing, so if you change it, you might have to modify your prompt.md
 
