@@ -3,6 +3,9 @@ import fastapi_poe as fp
 import asyncio, os, subprocess, ast, time, logging, sys
 from serpapi import GoogleSearch
 
+#Author: Dennis Chow 2025-Jan-21 dchow[AT]xtecsystems.com
+#NO EXPRESSED WARRANTY. Licensed under MIT 
+
 #usage
 #echo 'Please determine the OS of the local host we are running and then enumerate what existing hardening settings are enabled.' | python3 ./poe-agent.py
 
