@@ -10,6 +10,9 @@ This project is a quick and dirty way of using a multi-shot AI agent approach us
 ## Why
 To show you that you don't need a fancy framework like Vertex, Bedrock, or LangChain. You can implement very basic, yet limited agents yourself. Other frameworks have nice management and modulation, but if you want to just get a single purpose agent done, this is an easy to use template with multi-shot capabilities. 
 
+## Initial findings
+I've found that Claude 3.5 Sonnet at the time of this development likes to deviate from the prompt instructions after about 3 iterations, it starts using sudo and commands. However, its thoughts aren't wrong and it wishes to explore.  Poe.com has a fairly limited API so you can't rapid fire too much. With additional guard rails and human in the loop for with additional logic on executed tools, this is promising.
+
 ## Features
 
  - Modular "base" prompt in mark down so you can add and remove tools
