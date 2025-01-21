@@ -1,0 +1,10 @@
+# required API keys from https://serpapi.com/dashboard , https://poe.com/api_key, https://account.shodan.io/billing/member?language=en, https://urlscan.io/docs/api/
+
+mkdir poe-agent && cd poe-agent
+python3 -m venv .
+source ./bin/activate
+pip3 install -r requirements.txt
+export POE_API='<YOUR-KEY>'
+export SERP_API='<YOUR-KEY>'
+#export SHODAN_API='<YOUR-KEY>'
+#export URLSCAN_API='<YOUR-KEY>'
