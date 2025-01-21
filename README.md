@@ -47,5 +47,5 @@ I've found that Claude 3.5 Sonnet at the time of this development likes to devia
 ## Output with Safeguard Trigger
 ![enter image description here](https://github.com/dc401/poe-ai-agent-example/blob/main/python-poe-ai-agent-output.png?raw=true)
 
-##Output Completing Successfully
+## Output Completing Successfully
 ![enter image description here](https://github.com/dc401/poe-ai-agent-example/blob/main/python-poe-ai-agent-output-2.png?raw=true)
