@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import fastapi_poe as fp
-import asyncio, os, subprocess, ast, time, logging, sys
+import asyncio, os, subprocess, ast, time, logging, sys, random
 from serpapi import GoogleSearch
 
 #Author: Dennis Chow 2025-Jan-21 dchow[AT]xtecsystems.com
@@ -125,7 +125,7 @@ while counter < 5:
         tool_output_history +=result
     #replace the old prompt with the appended stuff
     appended_prompt_text = prompt_text + '\n' + '## Tool Result Output History' + '\n' + tool_output_history + '\n' + '## Iteration Counter' + '\n' + str(counter)
-    #time.sleep(1.5) replaced with expotential back off at the client
+    time.sleep(random.randint(3,6)) #re-added to delay between iterations
     #re-initiate the pull using appended message
     message = fp.ProtocolMessage(role="user", content=(appended_prompt_text))
     llm_response = asyncio.run(get_responses(poe_api_key, [message]))
