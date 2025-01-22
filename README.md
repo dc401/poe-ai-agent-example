@@ -1,6 +1,8 @@
 # poe-ai-agent-example
 This is an example build of using Poe.com's API to create an LLM based AI agent that can execute commands and tools in a multi-shot way without relying on LangGraph, LangChain, GCP Vertex, or Amazon Bedrock. It is just a generic multi shot LLM "agent" without the agentic framework.
 
+More information at the Medium article: "[Create Lightweight Agentic AI Tools](https://dwchow.medium.com/create-lightweight-agentic-ai-tools-99a65bd2caa5)"
+
 ## Caution
 Please note that this is considered a proof of concept piece of code. Although I do show you how to use basic guard rails, this may not protect against everything, including data leaking of important system information in an uncontrolled LLM. You should replace the poe.com agent with a trusted instance of an LLM running in a production or corporate env. Please do NOT run this on a production network without extensive testing and additional guard rails, including consideration for changing from poe.com to any other LLM API client that you TRUST. That being said, there is NO EXPRESSED WARRANTY.
 
