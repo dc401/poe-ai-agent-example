@@ -146,10 +146,6 @@ You can customize this in the script under `prohibited_commands`.
 * CI/CD deployment on Cloud Run or Cloud Functions
 ---
 
-Based on the three versions of `sechard-agent` you iterated through, here's a **section to add to your `README.md`** that clearly explains what changed in each version (`1.0`, `1.1`, and `1.2`) and what users should try based on their needs.
-
----
-
 ### 🔢 Sechard Agent Versions Explained
 | Version | Key Features | Recommended Use |
 |---------|--------------|------------------|
