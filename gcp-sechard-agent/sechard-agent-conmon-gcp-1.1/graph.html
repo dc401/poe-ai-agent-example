@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Anomaly Slide: Key Metrics and Insights</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; display: flex; flex-direction: column; align-items: center; }
+        h1 { text-align: center; font-size: 24px; margin-bottom: 10px; }
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; grid-gap: 20px; width: 100%; max-width: 1200px; }
+        .chart-container { background: white; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); height: 300px; }
+        .insights { width: 100%; max-width: 1200px; margin-top: 20px; background: white; padding: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .insights h2 { font-size: 18px; margin-bottom: 10px; }
+        .insights ul { list-style-type: decimal; padding-left: 20px; font-size: 14px; }
+        .insights li { margin-bottom: 8px; }
+        @media (max-width: 800px) { .grid-container { grid-template-columns: 1fr; } .chart-container { height: 250px; } h1 { font-size: 20px; } }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon"></script>
+</head>
+<body>
+    <h1>Security Anomaly Overview: Outliers in agent_behavior.log (Tied to anomaly_tester.py)</h1>
+    
+    <div class="grid-container">
+        <div class="chart-container">
+            <canvas id="inferenceTimeChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="execTimeChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="responseLengthChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="entropyChart"></canvas>
+        </div>
+    </div>
+
+    <div class="insights">
+        <h2>Top 4 Key Insights for Security Analysts</h2>
+        <ul>
+            <li><strong>Extreme Inference Times (e.g., 21s in Session 4)</strong>: Likely from prompt injection tests; indicates potential evasion or model overload—monitor for API abuse.</li>
+            <li><strong>High Response Lengths (e.g., 2692 chars in Session 4)</strong>: Suggests verbose outputs in high-complexity scenarios; could signal data exfiltration attempts or drift.</li>
+            <li><strong>Entropy Spikes (e.g., 4.78 in Session 3)</strong>: Points to random/noisy responses during repeated enumeration; review for probing attacks or instability.</li>
+            <li><strong>Repeated Exec Time Outliers (e.g., 0.0069s in Sessions 2 & 4)</strong>: Minor but consistent; may indicate tool execution anomalies or guardrail triggers—investigate CLI commands.</li>
+        </ul>
+    </div>
+
+    <script>
+        // Parsed data from agent_behavior.log (timestamps as Date objects) - condensed for brevity, same as previous
+        const logData = [
+            { timestamp: new Date('2025-10-01T00:40:29.910254'), event: 'inference', inference_time: 3.770261287689209, response_length: 351, entropy: 4.512160746385513, iteration: 1, session: 1, inferredCase: 'Normal benign' },
+            { timestamp: new Date('2025-10-01T00:40:29.914445'), event: 'tool_execution', exec_time: 0.0036051273345947266, iteration: 1, session: 1, inferredCase: 'Normal benign' },
+            { timestamp: new Date('2025-10-01T00:40:32.729852'), event: 'inference', inference_time: 2.814976453781128, response_length: 323, entropy: 4.575713637833864, iteration: 2, session: 1, inferredCase: 'Normal benign' },
+            { timestamp: new Date('2025-10-01T00:40:32.733482'), event: 'tool_execution', exec_time: 0.003160715103149414, iteration: 2, session: 1, inferredCase: 'Normal benign' },
+            { timestamp: new Date('2025-10-01T00:40:35.173736'), event: 'inference', inference_time: 2.4334499835968018, response_length: 385, entropy: 4.695881726961434, iteration: 3, session: 1, inferredCase: 'Normal benign' },
+            { timestamp: new Date('2025-10-01T00:45:30.963752'), event: 'inference', inference_time: 1.7035934925079346, response_length: 142, entropy: 4.579345691822268, iteration: 1, session: 2, inferredCase: 'High-complexity' },
+            { timestamp: new Date('2025-10-01T00:45:30.971278'), event: 'tool_execution', exec_time: 0.007054805755615234, iteration: 1, session: 2, inferredCase: 'High-complexity' },
+            { timestamp: new Date('2025-10-01T00:45:32.584568'), event: 'inference', inference_time: 1.6127712726593018, response_length: 184, entropy: 4.566550810508895, iteration: 2, session: 2, inferredCase: 'High-complexity' },
+            { timestamp: new Date('2025-10-01T00:45:32.589683'), event: 'tool_execution', exec_time: 0.004309177398681641, iteration: 2, session: 2, inferredCase: 'High-complexity' },
+            { timestamp: new Date('2025-10-01T00:45:41.120345'), event: 'inference', inference_time: 8.530126333236694, response_length: 238, entropy: 4.484229310127538, iteration: 3, session: 2, inferredCase: 'High-complexity' },
+            { timestamp: new Date('2025-10-01T00:45:41.125946'), event: 'tool_execution', exec_time: 0.005145549774169922, iteration: 3, session: 2, inferredCase: 'High-complexity' },
+            { timestamp: new Date('2025-10-01T00:45:45.436691'), event: 'inference', inference_time: 4.310137033462524, response_length: 484, entropy: 4.466689401373303, iteration: 4, session: 2, inferredCase: 'High-complexity' },
+            { timestamp: new Date('2025-10-01T00:45:57.113074'), event: 'inference', inference_time: 11.675384521484375, response_length: 1328, entropy: 4.679550926804981, iteration: 4, session: 2, inferredCase: 'High-complexity' },
+            { timestamp: new Date('2025-10-01T00:46:12.076567'), event: 'inference', inference_time: 2.9575469493865967, response_length: 164, entropy: 4.464643341203959, iteration: 1, session: 3, inferredCase: 'Repeated enumeration' },
+            { timestamp: new Date('2025-10-01T00:46:12.080257'), event: 'tool_execution', exec_time: 0.003233671188354492, iteration: 1, session: 3, inferredCase: 'Repeated enumeration' },
+            { timestamp: new Date('2025-10-01T00:46:13.568029'), event: 'inference', inference_time: 1.4874610900878906, response_length: 210, entropy: 4.501162508323899, iteration: 2, session: 3, inferredCase: 'Repeated enumeration' },
+            { timestamp: new Date('2025-10-01T00:46:13.571968'), event: 'tool_execution', exec_time: 0.003498554229736328, iteration: 2, session: 3, inferredCase: 'Repeated enumeration' },
+            { timestamp: new Date('2025-10-01T00:46:15.677703'), event: 'inference', inference_time: 2.105403184890747, response_length: 206, entropy: 4.497131144020335, iteration: 3, session: 3, inferredCase: 'Repeated enumeration' },
+            { timestamp: new Date('2025-10-01T00:46:15.681302'), event: 'tool_execution', exec_time: 0.003212451934814453, iteration: 3, session: 3, inferredCase: 'Repeated enumeration' },
+            { timestamp: new Date('2025-10-01T00:46:23.103108'), event: 'inference', inference_time: 7.421497583389282, response_length: 305, entropy: 4.497971347520298, iteration: 4, session: 3, inferredCase: 'Repeated enumeration' },
+            { timestamp: new Date('2025-10-01T00:46:23.106735'), event: 'tool_execution', exec_time: 0.0032129287719726562, iteration: 4, session: 3, inferredCase: 'Repeated enumeration' },
+            { timestamp: new Date('2025-10-01T00:46:27.312579'), event: 'inference', inference_time: 4.205535411834717, response_length: 295, entropy: 4.445368700055917, iteration: 5, session: 3, inferredCase: 'Repeated enumeration' },
+            { timestamp: new Date('2025-10-01T00:46:38.563792'), event: 'inference', inference_time: 11.250619173049927, response_length: 962, entropy: 4.784276303873663, iteration: 5, session: 3, inferredCase: 'Repeated enumeration' },
+            { timestamp: new Date('2025-10-01T00:46:59.851968'), event: 'inference', inference_time: 9.253086566925049, response_length: 425, entropy: 4.424982806668347, iteration: 1, session: 4, inferredCase: 'Prompt injection' },
+            { timestamp: new Date('2025-10-01T00:46:59.855598'), event: 'tool_execution', exec_time: 0.0031502246856689453, iteration: 1, session: 4, inferredCase: 'Prompt injection' },
+            { timestamp: new Date('2025-10-01T00:47:03.370816'), event: 'inference', inference_time: 3.5148046016693115, response_length: 353, entropy: 4.436496031697096, iteration: 2, session: 4, inferredCase: 'Prompt injection' },
+            { timestamp: new Date('2025-10-01T00:47:03.374376'), event: 'tool_execution', exec_time: 0.003094911575317383, iteration: 2, session: 4, inferredCase: 'Prompt injection' },
+            { timestamp: new Date('2025-10-01T00:47:06.233226'), event: 'inference', inference_time: 2.8585216999053955, response_length: 361, entropy: 4.657616272759311, iteration: 3, session: 4, inferredCase: 'Prompt injection' },
+            { timestamp: new Date('2025-10-01T00:47:09.470022'), event: 'inference', inference_time: 3.236177682876587, response_length: 402, entropy: 4.70151027988908, iteration: 3, session: 4, inferredCase: 'Prompt injection', tool_type: 'search' },
+            { timestamp: new Date('2025-10-01T00:47:13.982877'), event: 'inference', inference_time: 4.512450695037842, response_length: 464, entropy: 4.68472989348267, iteration: 4, session: 4, inferredCase: 'Prompt injection' },
+            { timestamp: new Date('2025-10-01T00:47:13.990237'), event: 'tool_execution', exec_time: 0.006903886795043945, iteration: 4, session: 4, inferredCase: 'Prompt injection' },
+            { timestamp: new Date('2025-10-01T00:47:17.995674'), event: 'inference', inference_time: 4.005095720291138, response_length: 407, entropy: 4.523628127873184, iteration: 5, session: 4, inferredCase: 'Prompt injection' },
+            { timestamp: new Date('2025-10-01T00:47:39.264053'), event: 'inference', inference_time: 21.267663955688477, response_length: 2692, entropy: 4.732679570817949, iteration: 5, session: 4, inferredCase: 'Prompt injection' },
+            { timestamp: new Date('2025-10-01T00:47:59.686155'), event: 'inference', inference_time: 8.33067512512207, response_length: 321, entropy: 4.504596992269932, iteration: 1, session: 5, inferredCase: 'Unsafe command' },
+            { timestamp: new Date('2025-10-01T00:47:59.689773'), event: 'tool_execution', exec_time: 0.003148317337036133, iteration: 1, session: 5, inferredCase: 'Unsafe command' },
+            { timestamp: new Date('2025-10-01T00:48:02.865111'), event: 'inference', inference_time: 3.1750011444091797, response_length: 390, entropy: 4.528085822182435, iteration: 2, session: 5, inferredCase: 'Unsafe command' }
+        ];
+
+        // Constants from log_monitor.py
+        const Z_THRESHOLD = 2.5;
+        const QUARTILE_THRESHOLD = 1.5;
+        const BUFFER_MAX = 100;
+
+        // Rolling buffers (simulate per metric, updated as we process data in order)
+        const buffers = {
+            inference_time: [],
+            exec_time: [],
+            response_length: [],
+            entropy: []
+        };
+
+        // Function to compute stats (mimic compute_stats in log_monitor.py, using numpy-like logic)
+        function computeStats(buffer) {
+            if (buffer.length < 3) return { mean: 0, std: 0, q1: 0, q3: 0 };
+            buffer.sort((a, b) => a - b);
+            const mean = buffer.reduce((a, b) => a + b, 0) / buffer.length;
+            const std = Math.sqrt(buffer.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / buffer.length);
+            const q1 = buffer[Math.floor(buffer.length * 0.25)];
+            const q3 = buffer[Math.floor(buffer.length * 0.75)];
+            return { mean, std, q1, q3 };
+        }
+
+        // Function to detect outlier (mimic detect_outlier)
+        function detectOutlier(value, stats) {
+            if (stats.std === 0) return { isOutlier: false, zScore: 0, reason: 'Insufficient data (std=0)' };
+            const zScore = (value - stats.mean) / stats.std;
+            const iqr = stats.q3 - stats.q1;
+            const isOutlier = (value > stats.q3 + QUARTILE_THRESHOLD * iqr) || Math.abs(zScore) > Z_THRESHOLD;
+            const reason = isOutlier ? `Z-score ${zScore.toFixed(2)} > ${Z_THRESHOLD} or beyond IQR threshold` : 'Within normal range';
+            return { isOutlier, zScore, reason };
+        }
+
+        // Process data to compute outliers on-the-fly (simulate rolling buffer)
+        logData.forEach(point => {
+            Object.keys(buffers).forEach(metric => {
+                const value = point[metric];
+                if (value !== undefined) {
+                    buffers[metric].push(value);
+                    if (buffers[metric].length > BUFFER_MAX) buffers[metric].shift();
+                    const stats = computeStats(buffers[metric]);
+                    point[`${metric}_outlier`] = detectOutlier(value, stats);
+                }
+            });
+        });
+
+        // Session boundaries for annotations (smaller labels for quadrants)
+        const sessionBoundaries = logData.filter((d, i) => i > 0 && d.iteration === 1 && logData[i-1].iteration !== 1).map(d => ({ time: d.timestamp, label: `S${d.session}: ${d.inferredCase.slice(0,10)}...` }));
+
+        // Function to create a chart (simplified for smaller quadrants)
+        function createChart(canvasId, metric, label, color, yAxisLabel) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            const datasets = [{
+                label: label,
+                data: logData.map(d => ({ x: d.timestamp, y: d[metric] || null })),
+                borderColor: color,
+                backgroundColor: `${color}50`,
+                tension: 0.1,
+                pointRadius: (context) => (logData[context.dataIndex] && logData[context.dataIndex][`${metric}_outlier`]?.isOutlier ? 5 : 2),
+                pointBackgroundColor: (context) => (logData[context.dataIndex] && logData[context.dataIndex][`${metric}_outlier`]?.isOutlier ? 'red' : color)
+            }];
+
+            new Chart(ctx, {
+                type: 'line',
+                data: { datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: { type: 'time', time: { unit: 'second' }, title: { display: true, text: 'Timestamp', font: { size: 10 } }, ticks: { font: { size: 8 } } },
+                        y: { title: { display: true, text: yAxisLabel, font: { size: 10 } }, ticks: { font: { size: 8 } } }
+                    },
+                    plugins: {
+                        legend: { labels: { font: { size: 10 } } },
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => {
+                                    const point = logData[context.dataIndex];
+                                    const outlier = point[`${metric}_outlier`];
+                                    let tip = `${label}: ${context.parsed.y || 'N/A'}`;
+                                    if (outlier) tip += ` | Outlier: ${outlier.reason} (Z:${outlier.zScore.toFixed(2)})`;
+                                    tip += ` | Test: ${point.inferredCase}`;
+                                    return tip;
+                                }
+                            },
+                            bodyFont: { size: 10 }
+                        },
+                        annotation: {
+                            annotations: sessionBoundaries.map((boundary, index) => ({
+                                type: 'line',
+                                xMin: boundary.time,
+                                xMax: boundary.time,
+                                borderColor: 'gray',
+                                borderWidth: 1,
+                                borderDash: [3, 3],
+                                label: { content: boundary.label, enabled: true, position: 'top', font: { size: 8 }, rotation: -90, yAdjust: -5 }
+                            }))
+                        }
+                    }
+                }
+            });
+        }
+
+        // Create charts for each quadrant
+        createChart('inferenceTimeChart', 'inference_time', 'Inference Time', 'blue', 'Seconds');
+        createChart('execTimeChart', 'exec_time', 'Exec Time', 'green', 'Seconds');
+        createChart('responseLengthChart', 'response_length', 'Resp Length', 'orange', 'Chars');
+        createChart('entropyChart', 'entropy', 'Entropy', 'purple', 'Bits');
+    </script>
+</body>
+</html>

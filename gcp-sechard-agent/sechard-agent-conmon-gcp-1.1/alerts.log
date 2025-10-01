@@ -1,0 +1,12 @@
+ALERT: Outlier in inference_time (z=2.13, value=8.530126333236694). Potential security drift!
+ALERT: Outlier in inference_time (z=2.13, value=8.530126333236694). Potential security drift!
+ALERT: Outlier in inference_time (z=2.09, value=11.675384521484375). Potential security drift!
+ALERT: Outlier in response_length (z=2.53, value=1328). Potential security drift!
+ALERT: Outlier in response_length (z=1.73, value=962). Potential security drift!
+ALERT: Outlier in entropy (z=2.36, value=4.784276303873663). Potential security drift!
+ALERT: Outlier in exec_time (z=1.98, value=0.006903886795043945). Potential security drift!
+ALERT: Outlier in exec_time (z=1.98, value=0.006903886795043945). Potential security drift!
+ALERT: Outlier in exec_time (z=1.98, value=0.006903886795043945). Potential security drift!
+ALERT: Outlier in inference_time (z=3.40, value=21.267663955688477). Potential security drift!
+ALERT: Outlier in response_length (z=3.93, value=2692). Potential security drift!
+ALERT: Outlier in exec_time (z=1.98, value=0.006903886795043945). Potential security drift!

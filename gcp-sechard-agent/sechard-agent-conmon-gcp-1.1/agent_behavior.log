@@ -1,0 +1,37 @@
+2025-10-01T00:40:29.910254 {"event": "inference", "inference_time": 3.770261287689209, "response_length": 351, "entropy": 4.512160746385513, "iteration": 1}
+2025-10-01T00:40:29.914445 {"event": "tool_execution", "tool_type": "cli", "exec_time": 0.0036051273345947266, "iteration": 1}
+2025-10-01T00:40:32.729852 {"event": "inference", "inference_time": 2.814976453781128, "response_length": 323, "entropy": 4.575713637833864, "iteration": 2}
+2025-10-01T00:40:32.733482 {"event": "tool_execution", "tool_type": "cli", "exec_time": 0.003160715103149414, "iteration": 2}
+2025-10-01T00:40:35.173736 {"event": "inference", "inference_time": 2.4334499835968018, "response_length": 385, "entropy": 4.695881726961434, "iteration": 3}
+2025-10-01T00:45:30.963752 {"event": "inference", "inference_time": 1.7035934925079346, "response_length": 142, "entropy": 4.579345691822268, "iteration": 1}
+2025-10-01T00:45:30.971278 {"event": "tool_execution", "tool_type": "cli", "exec_time": 0.007054805755615234, "iteration": 1}
+2025-10-01T00:45:32.584568 {"event": "inference", "inference_time": 1.6127712726593018, "response_length": 184, "entropy": 4.566550810508895, "iteration": 2}
+2025-10-01T00:45:32.589683 {"event": "tool_execution", "tool_type": "cli", "exec_time": 0.004309177398681641, "iteration": 2}
+2025-10-01T00:45:41.120345 {"event": "inference", "inference_time": 8.530126333236694, "response_length": 238, "entropy": 4.484229310127538, "iteration": 3}
+2025-10-01T00:45:41.125946 {"event": "tool_execution", "tool_type": "cli", "exec_time": 0.005145549774169922, "iteration": 3}
+2025-10-01T00:45:45.436691 {"event": "inference", "inference_time": 4.310137033462524, "response_length": 484, "entropy": 4.466689401373303, "iteration": 4}
+2025-10-01T00:45:57.113074 {"event": "inference", "inference_time": 11.675384521484375, "response_length": 1328, "entropy": 4.679550926804981, "iteration": 4}
+2025-10-01T00:46:12.076567 {"event": "inference", "inference_time": 2.9575469493865967, "response_length": 164, "entropy": 4.464643341203959, "iteration": 1}
+2025-10-01T00:46:12.080257 {"event": "tool_execution", "tool_type": "cli", "exec_time": 0.003233671188354492, "iteration": 1}
+2025-10-01T00:46:13.568029 {"event": "inference", "inference_time": 1.4874610900878906, "response_length": 210, "entropy": 4.501162508323899, "iteration": 2}
+2025-10-01T00:46:13.571968 {"event": "tool_execution", "tool_type": "cli", "exec_time": 0.003498554229736328, "iteration": 2}
+2025-10-01T00:46:15.677703 {"event": "inference", "inference_time": 2.105403184890747, "response_length": 206, "entropy": 4.497131144020335, "iteration": 3}
+2025-10-01T00:46:15.681302 {"event": "tool_execution", "tool_type": "cli", "exec_time": 0.003212451934814453, "iteration": 3}
+2025-10-01T00:46:23.103108 {"event": "inference", "inference_time": 7.421497583389282, "response_length": 305, "entropy": 4.497971347520298, "iteration": 4}
+2025-10-01T00:46:23.106735 {"event": "tool_execution", "tool_type": "cli", "exec_time": 0.0032129287719726562, "iteration": 4}
+2025-10-01T00:46:27.312579 {"event": "inference", "inference_time": 4.205535411834717, "response_length": 295, "entropy": 4.445368700055917, "iteration": 5}
+2025-10-01T00:46:38.563792 {"event": "inference", "inference_time": 11.250619173049927, "response_length": 962, "entropy": 4.784276303873663, "iteration": 5}
+2025-10-01T00:46:59.851968 {"event": "inference", "inference_time": 9.253086566925049, "response_length": 425, "entropy": 4.424982806668347, "iteration": 1}
+2025-10-01T00:46:59.855598 {"event": "tool_execution", "tool_type": "cli", "exec_time": 0.0031502246856689453, "iteration": 1}
+2025-10-01T00:47:03.370816 {"event": "inference", "inference_time": 3.5148046016693115, "response_length": 353, "entropy": 4.436496031697096, "iteration": 2}
+2025-10-01T00:47:03.374376 {"event": "tool_execution", "tool_type": "cli", "exec_time": 0.003094911575317383, "iteration": 2}
+2025-10-01T00:47:06.233226 {"event": "inference", "inference_time": 2.8585216999053955, "response_length": 361, "entropy": 4.657616272759311, "iteration": 3}
+2025-10-01T00:47:09.470022 {"event": "inference", "tool_type": "search", "inference_time": 3.236177682876587, "response_length": 402, "entropy": 4.70151027988908, "iteration": 3}
+2025-10-01T00:47:13.982877 {"event": "inference", "inference_time": 4.512450695037842, "response_length": 464, "entropy": 4.68472989348267, "iteration": 4}
+2025-10-01T00:47:13.990237 {"event": "tool_execution", "tool_type": "cli", "exec_time": 0.006903886795043945, "iteration": 4}
+2025-10-01T00:47:17.995674 {"event": "inference", "inference_time": 4.005095720291138, "response_length": 407, "entropy": 4.523628127873184, "iteration": 5}
+2025-10-01T00:47:39.264053 {"event": "inference", "inference_time": 21.267663955688477, "response_length": 2692, "entropy": 4.732679570817949, "iteration": 5}
+2025-10-01T00:47:59.686155 {"event": "inference", "inference_time": 8.33067512512207, "response_length": 321, "entropy": 4.504596992269932, "iteration": 1}
+2025-10-01T00:47:59.689773 {"event": "tool_execution", "tool_type": "cli", "exec_time": 0.003148317337036133, "iteration": 1}
+2025-10-01T00:48:02.865111 {"event": "inference", "inference_time": 3.1750011444091797, "response_length": 390, "entropy": 4.528085822182435, "iteration": 2}
+2025-10-01T00:48:22.921051 {"event": "inference", "inference_time": 8.026684045791626, "response_length": 241, "entropy": 4.536115118234453, "iteration": 1}
